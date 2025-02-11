@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Autumn Lloyd Code and Art Portfolio">
+  <title>Digital Portfolio</title>
+<link  rel="stylesheet" href="main.css">
+<link rel="apple-touch-icon" sizes="180x180" href="images/favicon_io/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon_io/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="images/favicon_io/favicon-16x16.png">
+</head>
+
+<!--Start of Body-->
+<body>
+    <!--Start of Nav-->
+    <nav>
+        <ul>
+            <li><a href = "index.html">Home</a></li>
+            <li><a href = "aboutMe.html">About Me</a></li>
+            <li><a href = "processing.html">Processing</a></li>
+            <li><a href = "jem.html">Jython Environment for Music</a></li>
+            <li><a href = "digitalArt.html">Digital Art</a></li>
+            <li><a href = "frc.html">FRC Robotics</a></li>
+        </ul>
+    <!--End of Nav-->
+    </nav>
+
+    <!--Start of Header-->
+    <div id = "header">
+       <h1>Processing Art</h1>
+    <!--End of Header-->
+    </div>
+
+    <!--Start of Wrapper-->
+    <div id = "wrapper">
+
+        <div id = "introProcessing">
+            <h2>What is Processing?</h2>
+            <p>Processing is a graphics oriented programming language, designed for artists, by artists. Below are some projects that I have made in processing. Some projects have been omitted from the mobile version because they are not compatible.</p>
+        </div>
+
+                <!--Start Fruit Game-->
+                <div id = "fruitGame">
+                    <h2>Fruit Game</h2>
+                    <p>
+                        This is a hyperlinked image that links to a zip file containing a fruit game meant to run in Processing.
+                    </p>
+                    <a href = "game.zip"><img src = "images/StartScreen.png" alt = "game screen"></a>
+                </div>
+
+                <!--Start Animal Crossing-->
+        <div id = "animalCrossing">
+            <h2>Self Portrait</h2>
+            <p>
+                This is the first big project I ever made in Processing. It is a satirical self-portrait in the style of the popular game Animal Crossing.
+            </p>
+            <img src="images/manmadehorrorsbeyondmycomprehension.jpg" alt = "animal crossing arson">
+        </div>
+
+        <!--Start Plant Animation-->
+        <div id = "plantAnim">
+
+            <h2>Simple Plant Animation</h2>
+            <p>
+                These are some keyframes from a simple animation I made in processing.
+            </p>
+
+            <img src = "images/frame-0001.jpg" alt ="simple animation">
+            <img src = "images/frame-0772.jpg" alt ="simple animation">
+            <img src = "images/frame-1532.jpg" alt ="simple animation">
+            <img src = "images/frame-1966.jpg" alt ="simple animation">
+            <img src = "images/frame-2010.jpg" alt ="simple animation">
+
+        <!--End Plant Animation-->
+        </div>
+
+        <!--Start Pong!-->
+        <div id = "pong">
+            <h2>Interactive Pong</h2>
+            <p>You can play this game by dragging your mouse to interact with the paddle. If you win, a green circle will be shown. If you lose, a red circle will be shown. Press the space bar to reset the game. If the spacebar doesn't work initially, make sure to click the game first.</p>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.min.js" id = "pongScript"></script>
+<script type="application/processing" data-processing-target="pjs1">
+
+//Assignment # 2
+//Autumn Lloyd
+//September 21, 2022
+//pong animation? I hope this counts as an interactive drawing.
+
+float ballX = 200;
+float ballY = 250;
+
+float ballMoveX = 2.5;
+float ballMoveY = 0;
+
+float pongY = 250;
+float pongX = 450;
+
+float autoPongX = 50;
+float autoPongY = 250;
+
+int playWin = 0;
+int compWin = 0;
+
+int playWinX = 350;
+int compWinX = 50;
+
+boolean playWinner = false;
+boolean compWinner = false;
+
+float randDirection = 1;
+
+void setup()
+{
+  size(500,500);
+}
+
+void draw()
+{
+  //score set up
+  playWinX = 350;
+  compWinX = 50;
+  
+  //hehe
+  pongY = mouseY;
+  
+  background(0);
+  
+  //selects win vs lose vs play screen
+  if(playWinner)
+  {
+    fill(0,255,0);
+    ellipse(250,250,100,100);
+  }
+  else if (compWinner)
+  {
+    fill(255,0,0);
+    ellipse(250,250,100,100);
+  }
+  else
+  {
+  //pong divider
+  noStroke();
+  fill(255);
+  rectMode(CENTER);
+  rect(250,250,5,150);
+  
+  //pong hitter
+  rect(pongX, pongY, 5, 150);
+  
+  //auto pong hitter
+  
+  if(ballY < autoPongY)
+  {
+    autoPongY = autoPongY - random(3);
+  }
+  else
+  {
+    autoPongY = autoPongY + random(3);
+  }
+  
+  //keeps autoPong hitter on the screen
+  if (autoPongY < 0 )
+  {
+    autoPongY = ( abs(autoPongY) ) ;
+  }
+  else if (autoPongY > 500)
+  {
+    autoPongY = autoPongY - ( abs(autoPongY - 500));
+  }
+  //draws autopong hitter
+  
+  rect(autoPongX, autoPongY, 5, 150);
+  
+  //ball time
+  
+  //if ball overlaps with hitter, ball changes direction
+  if (((pongX - 5) < ballX && ballX < (pongX + 5)) && ((pongY - 75) < ballY && ballY < (pongY + 75)))
+  {
+    randDirection = abs( mouseX - pmouseX);
+    ballMoveY = randDirection;
+    ballMoveX = ballMoveX * -1;
+    ballMoveY = ballMoveY * -1;
+  }
+  
+  else if (((autoPongX - 5) < ballX && ballX < (autoPongX + 5)) && ((autoPongY - 75) < ballY && ballY < (autoPongY + 75)))
+  {
+    randDirection = random(.2,3);
+    ballMoveY = randDirection;
+    ballMoveX = ballMoveX * -1;
+    ballMoveY = ballMoveY * -1;
+  }
+  
+  //if ball hits edge of field, ball changes direction
+  
+  if (ballY < 0 || ballY > 500)
+  {
+    ballMoveY = ballMoveY * -1;
+  }
+  
+  
+  //draw ball
+  ellipse (ballX, ballY, 20, 20);
+  
+  ballX = ballX + ballMoveX;
+  ballY = ballY + ballMoveY;
+  
+  //score
+  
+  if(ballX < 0)
+  {
+    playWin++;
+    
+    ballX = 200;
+    ballY = 250;
+
+    ballMoveX = 2.5;
+    ballMoveY = 0;
+
+    pongY = 250;
+    pongX = 450;
+
+    autoPongX = 50;
+    autoPongY = 250;
+    
+  }
+ else if (ballX > 500)
+  {
+    compWin++;
+    
+    ballX = 200;
+    ballY = 250;
+
+    ballMoveX = 2.5;
+    ballMoveY = 0;
+
+    pongY = 250;
+    pongX = 450;
+
+    autoPongX = 50;
+    autoPongY = 250;
+    
+  }
+ 
+  //score display
+  //intentionally uses if instead of else if
+  //so that pervious scores are shown
+  //and I can use the loop and variable changes to draw the ellipses
+  //instead of manually doing coordinates
+  //code economy or whatever
+  if (playWin >= 1)
+  {
+    ellipse (playWinX, 50, 10, 10);
+    playWinX = playWinX + 30;
+  }
+  if (playWin >= 2)
+  {
+    ellipse (playWinX, 50, 10, 10);
+    playWinX = playWinX + 30;
+  }
+  if (playWin >= 3)
+  {
+    ellipse (playWinX, 50, 10, 10);
+    playWinX = playWinX + 30;
+  }
+  
+  if (compWin >= 1)
+  {
+    ellipse (compWinX, 50, 10, 10);
+    compWinX = compWinX + 30;
+  }
+  if (compWin >= 2)
+  {
+    ellipse (compWinX, 50, 10, 10);
+    compWinX = compWinX + 30;
+  }
+  if (compWin >= 3)
+  {
+    ellipse (compWinX, 50, 10, 10);
+    compWinX = compWinX + 30;
+  }
+  
+  //displays win or lose screen
+  if (compWin == 3)
+  {
+    fill(255,0,0);
+    ellipse(250,250,100,100);
+    compWinner = true;
+  }
+  else if (playWin == 3)
+  {
+    fill(0,255,0);
+    ellipse(250,250,100,100);
+    playWinner = true;
+  }
+  
+  }
+}
+
+void keyPressed ()
+{
+ //when a key is pressed, the game is reset
+ ballX = 200;
+ ballY = 250;
+
+ ballMoveX = 2.5;
+ ballMoveY = 0;
+
+ pongY = 250;
+ pongX = 450;
+
+ autoPongX = 50;
+ autoPongY = 250;
+
+ playWin = 0;
+ compWin = 0;
+
+ playWinX = 350;
+ compWinX = 50;
+
+ playWinner = false;
+ compWinner = false;
+ 
+}
+
+</script>
+<canvas id="pjs1"></canvas>
+
+        <!--End Pong!-->
+        </div>
+
+        
+    <!--End of Wrapper-->
+    </div>
+    <!--Start of Footer-->
+    <footer>
+        <p>Copyright &copy; 2023. Autumn Rose Lloyd. All Rights Reserved.</p>
+        <p>Questions? <a href = "mailto:lloydar@g.cofc.edu"> Contact Me. </a></p>
+    <!--End of Footer-->
+    </footer>
+<!--End of Body-->
+</body>
